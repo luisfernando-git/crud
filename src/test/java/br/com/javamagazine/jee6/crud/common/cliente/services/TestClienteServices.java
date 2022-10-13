@@ -2,15 +2,15 @@ package br.com.javamagazine.jee6.crud.common.cliente.services;
 
 import static org.junit.Assert.*;
 
-import br.com.javamagazine.jee6.crud.cliente.dao.ClienteDao;
-import br.com.javamagazine.jee6.crud.cliente.entity.Cliente;
-import br.com.javamagazine.jee6.crud.cliente.entity.ClienteTelefone;
-import br.com.javamagazine.jee6.crud.cliente.entity.filter.ClienteFilter;
-import br.com.javamagazine.jee6.crud.cliente.exception.ClienteExistenteException;
-import br.com.javamagazine.jee6.crud.cliente.exception.NenhumTelefoneInformadoException;
-import br.com.javamagazine.jee6.crud.cliente.services.ClienteServices;
-import br.com.javamagazine.jee6.crud.cliente.services.impl.ClienteServicesImpl;
-import br.com.javamagazine.jee6.crud.common.dao.DaoTest;
+import br.com.javamagazine.jee.crud.cliente.dao.ClienteDao;
+import br.com.javamagazine.jee.crud.cliente.entity.Cliente;
+import br.com.javamagazine.jee.crud.cliente.entity.ClienteTelefone;
+import br.com.javamagazine.jee.crud.cliente.entity.filter.ClienteFilter;
+import br.com.javamagazine.jee.crud.cliente.exception.ClienteExistenteException;
+import br.com.javamagazine.jee.crud.cliente.exception.NenhumTelefoneInformadoException;
+import br.com.javamagazine.jee.crud.cliente.services.ClienteServices;
+import br.com.javamagazine.jee.crud.cliente.services.impl.ClienteServicesImpl;
+import br.com.javamagazine.jee.crud.common.dao.DaoTest;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.*;
@@ -160,11 +160,11 @@ public class TestClienteServices {
         clienteServices.save(mark);
         clienteServices.save(bill);
         List<Cliente> clientes = clienteServices.findByFilter(null);
-// verifica se todos foram encontrados e na ordem esperada
+        // verifica se todos foram encontrados e na ordem esperada
         assertEquals(4, clientes.size());
         assertNomes(Arrays.asList("Bill", "John", "Mark", "Martin"), clientes);
         clientes = clienteServices.findByFilter(new ClienteFilter("Mar"));
-// verifica se todos foram encontrados e na ordem esperada
+        // verifica se todos foram encontrados e na ordem esperada
         assertEquals(2, clientes.size());
         assertNomes(Arrays.asList("Mark", "Martin"), clientes);
     }

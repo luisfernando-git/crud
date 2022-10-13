@@ -3,8 +3,9 @@ package br.com.javamagazine.jee.crud.cliente.dao;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.*;
-import br.com.javamagazine.jee6.crud.cliente.entity.Cliente;
-import br.com.javamagazine.jee6.crud.cliente.entity.filter.ClienteFilter;
+
+import br.com.javamagazine.jee.crud.cliente.entity.Cliente;
+import br.com.javamagazine.jee.crud.cliente.entity.filter.ClienteFilter;
 
 @Stateless
 public class ClienteDao {
