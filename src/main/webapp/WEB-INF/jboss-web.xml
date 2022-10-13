@@ -1,0 +1,3 @@
+<jboss-web>
+	<context-root>crud-jm</context-root>
+</jboss-web>
