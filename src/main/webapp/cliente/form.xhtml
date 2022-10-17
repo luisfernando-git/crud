@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/layout/template.xhtml">
+  <ui:define name="body">
+    <f:metadata>
+      <f:viewParam name="id" value="#{clienteMB.idCliente}" />
+      <f:event listener="#{clienteMB.load}" type="preRenderView" />
+    </f:metadata>
+    <h:form id="formCliente">
+      <p:messages autoUpdate="true" globalOnly="true" showSummary="false"
+                  showDetail="true" />
+      <p:panel header="#{msg['label.cliente.salvar']}"
+               styleClass="form-cadastro">
+        <p:focus for="txtNome" />
+        <table width="95%">
+          <tr>
+            <td class="form-cadastro-label"><h:outputLabel
+                    value="#{msg['label.id']}:" for="txtId"
+                    rendered="#{clienteMB.cliente.id != null}" /></td>
+            <td colspan="2"><h:outputText value="#{clienteMB.cliente.id}"
+                                          id="txtId" rendered="#{clienteMB.cliente.id != null}" /></td>
+          </tr>
+          <tr>
+            <td class="form-cadastro-label"><h:outputLabel
+                    value="#{msg['label.nome']}:" for="txtNome" /></td>
+            <td><p:inputText value="#{clienteMB.cliente.nome}" id="txtNome"
+                             required="true" maxlength="50" /></td>
+            <td><p:message id="msgNome" for="txtNome" /></td>
+          </tr>
+          <tr>
+            <td class="form-cadastro-label"><h:outputLabel
+                    value="#{msg['label.data-nascimento']}:" for="txtDataNascimento" />
+            </td>
+            <td><p:inputMask value="#{clienteMB.cliente.dataNascimento}"
+                             id="txtDataNascimento" required="true"
+                             mask="#{msg['mascara.data']}" size="9">
+              <f:convertDateTime pattern="#{msg['pattern.data']}"
+                                 timeZone="#{utilsMB.timeZone}" />
+            </p:inputMask></td>
+            <td><p:message id="msgDataNascimento" for="txtDataNascimento" />
+            </td>
+          </tr>
+          <tr>
+            <td class="form-cadastro-label"><h:outputLabel
+                    value="#{msg['label.email']}:" for="txtEmail" /></td>
+            <td><p:inputText value="#{clienteMB.cliente.email}"
+                             id="txtEmail" required="true" maxlength="50" /></td>
+            <td><p:message id="msgEmail" for="txtEmail" /></td>
+          </tr>
+        </table>
+        <p:panel header="#{msg['label.telefones']}" id="panelTelefones"
+                 styleClass="panel-telefones">
+          <h:panelGrid columns="3">
+            <h:outputText value="#{msg['label.telefone']}" for="txtTelefone" />
+            <p:inputMask value="#{clienteMB.telefoneAdd.telefone}"
+                         id="txtTelefone" mask="#{msg['mascara.telefone']}" size="10" />
+            <p:message id="msgTelefone" for="txtTelefone" />
+            <h:outputText value="#{msg['label.descricao']}" for="txtDescricao" />
+            <p:inputText value="#{clienteMB.telefoneAdd.descricao}"
+                         id="txtDescricao" maxlength="30" size="20" />
+            <p:message id="msgDescricao" for="txtDescricao" />
+          </h:panelGrid>
+          <p:commandButton actionListener="#{clienteMB.addTelefone}"
+                           process="panelTelefones" id="btnAddTelefone"
+                           value="#{msg['label.add']}" icon="ui-icon-circle-check"
+                           update="panelTelefones" />
+          <p:dataTable id="tableTelefones" value="#{clienteMB.telefones}"
+                       var="telefoneCliente" styleClass="table-telefones"
+                       emptyMessage="#{msg['label.cliente.telefone.nenhumcadastrado']}"
+                       paginator="true" rows="10" paginatorPosition="bottom"
+                       currentPageReportTemplate="#{msg['label.paginacao']}"
+                       paginatorTemplate="#{msg['label.paginacao.template']}">
+            <p:column style="width: 190px;">
+              <f:facet name="header">#{msg['label.telefone']}</f:facet>
+              <h:outputText value="#{telefoneCliente.telefone}" />
+            </p:column>
+            <p:column style="width: 190px;">
+              <f:facet name="header">#{msg['label.descricao']}</f:facet>
+              <h:outputText value="#{telefoneCliente.descricao}" />
+            </p:column>
+            <p:column style="text-align: center;">
+              <f:facet name="header">#{msg['label.remove']}</f:facet>
+              <p:commandButton title="#{msg['label.remove']}"
+                               icon="ui-icon-trash" id="btnRemove"
+                               actionListener="#{clienteMB.removeTelefone(telefoneCliente)}"
+                               process="@this" update=":formCliente:panelTelefones" />
+            </p:column>
+          </p:dataTable>
+        </p:panel>
+        <f:facet name="footer">
+          <p:commandButton action="#{clienteMB.save}" ajax="false" id="btnSave"
+                           value="#{msg['label.cliente.salvar']}" icon="ui-icon-circle-check" />
+          <p:commandButton value="#{msg['label.cancel']}" immediate="true"
+                           icon="ui-icon-cancel" action="#{clienteMB.cancelar}" ajax="false " />
+        </f:facet>
+      </p:panel>
+    </h:form>
+  </ui:define>
+</ui:composition>
+</html>

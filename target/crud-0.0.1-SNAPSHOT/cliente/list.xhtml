@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/layout/template.xhtml">
+    <ui:define name="body">
+        <p:growl id="messages" showDetail="true" autoUpdate="true"
+                 showSummary="false" />
+        <h:form id="formListCliente">
+            <p:panel header="#{msg['label.clientes']}" styleClass="panel-listagem"
+                     id="panelListagemCliente">
+                <h:panelGrid columns="3" styleClass="table-busca" id="tableBusca">
+                    <h:outputText value="#{msg['label.nome']}" />
+                    <p:inputText value="#{clienteMB.nomeBuscar}" size="20"
+                                 id="txtBuscaNome" />
+                    <p:commandButton value="#{msg['label.find']}" id="btnFind"
+                                     icon="ui-icon-zoomin" update="panelListagemCliente"
+                                     process="tableBusca" action="#{clienteMB.buscar}" />
+                </h:panelGrid>
+                <p:separator id="separator" />
+                <p:button value="#{msg['label.cliente.novo']}" outcome="form"
+                          icon="ui-icon-circle-plus" id="btnAddTop" />
+                <p:dataTable id="tabeClientes" value="#{clienteMB.clientes}"
+                             var="cliente"
+                             emptyMessage="#{msg['label.cliente.listagem.nenhumencontrado']}"
+                             paginator="true" rows="10" paginatorPosition="bottom"
+                             styleClass="table-listagem"
+                             currentPageReportTemplate="#{msg['label.paginacao']}"
+                             paginatorTemplate="#{msg['label.paginacao.template']}">
+                    <p:column sortBy="#{cliente.id}" style="width:50px;">
+                        <f:facet name="header">#{msg['label.id']}</f:facet>
+                        <h:outputText value="#{cliente.id}" />
+                    </p:column>
+                    <p:column sortBy="#{cliente.nome}" style="width:285px;">
+                        <f:facet name="header">#{msg['label.nome']}</f:facet>
+                        <h:outputText value="#{cliente.nome}" />
+                    </p:column>
+                    <p:column sortBy="#{cliente.email}" style="width:215px;">
+                        <f:facet name="header">#{msg['label.email']}</f:facet>
+                        <h:outputText value="#{cliente.email}" />
+                    </p:column>
+                    <p:column sortBy="#{cliente.dataNascimento}" style="width:150px;">
+                        <f:facet name="header">#{msg['label.data-nascimento']}</f:facet>
+                        <h:outputText value="#{cliente.dataNascimento}">
+                            <f:convertDateTime pattern="#{msg['pattern.data']}"
+                                               timeZone="#{utilsMB.timeZone}" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="text-align: center;width:50px;">
+                        <f:facet name="header">#{msg['label.update']}</f:facet>
+                        <p:button title="#{msg['label.update']}" outcome="form"
+                                  icon="ui-icon-pencil" id="btnUpdate">
+                            <f:param name="id" value="#{cliente.id}" />
+                        </p:button>
+                    </p:column>
+                    <p:column style="text-align: center;width:50px;">
+                        <f:facet name="header">#{msg['label.remove']}</f:facet>
+                        <p:commandButton tile="#{msg['label.remove']}"
+                                         onclick="confirmation.show();" icon="ui-icon-trash" id="btnRemove">
+                            <f:setPropertyActionListener target="#{clienteMB.cliente}"
+                                                         value="#{cliente}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <p:spacer style="width:100%; height: 10px;" />
+                <p:button value="#{msg['label.cliente.novo']}" outcome="form"
+                          icon="ui-icon-circle-plus" id="btnAddBottom" />
+            </p:panel>
+            <p:confirmDialog id="deleteDialog"
+                             message="#{msg['label.confirmar-exclusao']}" widgetVar="confirmation">
+                <p:commandButton id="btnConfirm" value="#{msg['label.sim']}"
+                                 action="#{clienteMB.remove}" ajax="false" />
+                <p:commandButton id="btnClose" value="#{msg['label.nao']}"
+                                 onclick="confirmation.hide()" />
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
