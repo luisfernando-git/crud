@@ -86,7 +86,7 @@ public class TestClienteServices {
 
     @Test
     public void testAddSemTelefone() throws Exception {
-        Cliente cliente = new Cliente("Bill", getDate("15/02/1999"),
+        Cliente cliente = new Cliente("Luis Fernando", getDate("15/02/1999"),
                 "goncalveslf99@gmail.com");
         try {
             clienteServices.save(cliente);

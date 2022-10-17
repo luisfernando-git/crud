@@ -1,4 +1,4 @@
-package br.com.javamagazine.jee.crud.utils;
+package br.com.javamagazine.jee.crud.common.web;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
